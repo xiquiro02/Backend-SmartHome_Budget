@@ -27,26 +27,12 @@ NombreUsuario varchar(100) not null,
 IDRol int not null,
 ApellidoPrimer varchar(100) not null,
 ApellidoSegundo varchar(100),
+correo varchar(100) not null,
+telefono int(100) not null,
 ContrasenaUsuario varchar(100) not null,
 FechaRegistro datetime,
 primary key (IDUsuario),
 foreign key (IDRol) references Roles(IDRol));
-
-create table Correo_Usuario (
-IDCorreo int not null,
-IDUsuario int not null,
-correoPrincipal boolean,
-primary key (IDCorreo),
-foreign key (IDUsuario) references Usuario(IDUsuario));
-
-create table Telefono_Usuario (
-IDTelefono int not null,
-IDUsuario int not null,
-Telefono int not null,
-TipoTelefono enum("Móvil", "Casa", "Trabajo") default "Móvil",
-TelefonoPrincipal boolean,
-primary key (IDTelefono),
-foreign key (IDUsuario) references Usuario(IDUsuario));
 
 create table Categorias_Egresos (
 IDCategoriaEgreso int not null,

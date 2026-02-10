@@ -12,15 +12,17 @@
         <exec.mainClass>com.smarthome.proyecto_smarthome.Proyecto_SmartHome</exec.mainClass>
     </properties>
     
-    
-    
     <dependencies>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>9.4.0</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
-    
 </project>

@@ -9,11 +9,12 @@ public class ClaseConexion {
      static String password = "#Aprendiz2024";
 
     public static Connection MetodoConectar(){
-        try {          
-            if (BD.isEmpty() && usuario.isEmpty() && password.isEmpty()){
+        try 
+        {          
+            if (BD.isEmpty() && usuario.isEmpty() && password.isEmpty())
+            {
                 System.out.println("Los datos estan vacios");
             }
-
                 Connection conn = DriverManager.getConnection(BD, usuario, password);
                 System.out.println("Conexion establecida");
                 return conn;
@@ -23,7 +24,6 @@ public class ClaseConexion {
             System.err.println(error);
             return null;
         }
-       
     }
 } 
 
