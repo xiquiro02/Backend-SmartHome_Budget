@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-        <exec.mainClass>com.smarthome.proyecto_smarthome.Proyecto_SmartHome</exec.mainClass>
+        <exec.mainClass>com.smarthome.Proyecto_SmartHome</exec.mainClass>
     </properties>
     
     <dependencies>

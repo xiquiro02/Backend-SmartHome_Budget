@@ -7,6 +7,11 @@ IDRol int not null,
 NombreRol varchar(100) not null,
 primary key (IDRol));
 
+INSERT INTO roles (IDRol, NombreRol)
+VALUES
+(1, 'Usuario'),
+(2, 'Administrador');
+
 create table PermisosRoles (
 IDPermiso int not null,
 NombrePermiso varchar(100) not null,
@@ -22,31 +27,20 @@ foreign key (IDRol) references Roles(IDRol),
 foreign key (IDPermiso) references PermisosRoles(IDPermiso));
 
 create table Usuario (
-IDUsuario int not null,
+IDUsuario int auto_increment not null,
 NombreUsuario varchar(100) not null,
 IDRol int not null,
-ApellidoPrimer varchar(100) not null,
-ApellidoSegundo varchar(100),
+PrimerApellido varchar(100) not null,
+SegundoApellido varchar(100),
+correo varchar(100) not null,
+telefono bigint not null,
 ContrasenaUsuario varchar(100) not null,
 FechaRegistro datetime,
 primary key (IDUsuario),
 foreign key (IDRol) references Roles(IDRol));
 
-create table Correo_Usuario (
-IDCorreo int not null,
-IDUsuario int not null,
-correoPrincipal boolean,
-primary key (IDCorreo),
-foreign key (IDUsuario) references Usuario(IDUsuario));
-
-create table Telefono_Usuario (
-IDTelefono int not null,
-IDUsuario int not null,
-Telefono int not null,
-TipoTelefono enum("Móvil", "Casa", "Trabajo") default "Móvil",
-TelefonoPrincipal boolean,
-primary key (IDTelefono),
-foreign key (IDUsuario) references Usuario(IDUsuario));
+insert into usuario(NombreUsuario, PrimerApellido, correo, telefono, ContrasenaUsuario, IDRol)
+VALUES ('ximena', 'Quintanilla', 'ximenaqiro02@gmail.com', '3208325041','12345', 1);
 
 create table Categorias_Egresos (
 IDCategoriaEgreso int not null,
@@ -59,29 +53,29 @@ NombreMetodoPago varchar(100) not null,
 primary key (IDMetodoPago));
 
 create table Registro_Egresos (
-IDEgresos int not null,
+IDEgresos int not null, 
 Monto decimal(12,2) not null,
-IDCategoriaEgreso int not null,
+IDCategoriaEgreso int not null, 
 IDMetodoPago int not null,
 FechaVencimiento datetime not null,
-Descripcion text,
+Descripcion text, 
 EstadoPago enum("Pendiente", "Pagada", "Vencida") default "Pendiente",
 primary key (IDEgresos),
 foreign key (IDCategoriaEgreso) references Categorias_Egresos(IDCategoriaEgreso),
 foreign key (IDMetodoPago) references Metodo_Pago(IDMetodoPago));
 
 create table Recordatorios_Egresos (
-IDRecordatorioEgresos int not null,
+IDRecordatorioEgresos int not null, 
 IDEgresos int not null,
 IDUsuario int not null,
-DescripcionAlerta text,
+DescripcionAlerta text, 
 FechaRecordatorio datetime not null,
 primary key (IDRecordatorioEgresos),
 foreign key (IDUsuario) references Usuario(IDUsuario),
 foreign key (IDEgresos) references Registro_Egresos(IDEgresos));
 
 create table Categorias_Ingresos (
-IDCategoriaIngreso int not null,
+IDCategoriaIngreso int not null, 
 NombreCategoriaIngreso varchar(100) not null,
 primary key (IDCategoriaIngreso));
 
@@ -90,15 +84,15 @@ IDIngresos int not null,
 Monto decimal(12,2) not null,
 FechaIngreso datetime not null,
 Descripcion text,
-IDCategoriaIngreso int not null,
+IDCategoriaIngreso int not null, 
 primary key (IDIngresos),
 foreign key (IDCategoriaIngreso) references Categorias_Ingresos(IDCategoriaIngreso));
 
 create table Recordatorios_Ingresos (
-IDRecordatorioIngresos int not null,
+IDRecordatorioIngresos int not null, 
 IDIngresos int not null,
 IDUsuario int not null,
-DescripcionAlerta text,
+DescripcionAlerta text, 
 FechaRecordatorio datetime not null,
 primary key (IDRecordatorioIngresos),
 foreign key (IDUsuario) references Usuario(IDUsuario),
@@ -116,10 +110,9 @@ Pais varchar(100) not null,
 Ciudad varchar(100) not null,
 Direccion varchar(100) not null,
 FechaRegistro datetime not null,
-IDUsuario int not null,
+IDUsuario int not null, 
 IDCoordenada int,
 primary key (IDUbicacion),
-foreign key (IDUsuario) references Usuario(IDUsuario),
 foreign key (IDCoordenada) references Coordenadas(IDCoordenada));
 
 create table Tienda (
@@ -129,7 +122,7 @@ Pais varchar(100) not null,
 Ciudad varchar(100) not null,
 Direccion varchar(100) not null,
 IDCoordenada int,
-FechaRegistro datetime,
+FechaRegistro datetime, 
 primary key(IDTienda),
 foreign key (IDCoordenada) references Coordenadas(IDCoordenada));
 
@@ -150,8 +143,8 @@ foreign key (IDTipoProducto) references Tipo_Producto(IDTipoProducto));
 
 create table Inventario_Casa (
 IDInventario int not null,
-IDProducto int not null,
-StockActual int not null,
+IDProducto int not null, 
+StockActual int not null, 
 FechaActualizacion datetime not null,
 primary key(IDInventario),
 foreign key (IDProducto) references Producto(IDProducto));
@@ -159,7 +152,7 @@ foreign key (IDProducto) references Producto(IDProducto));
 create table Precio_Producto (
 IDPrecio int not null,
 IDTienda int not null,
-IDInventario int not null,
+IDInventario int not null, 
 precio decimal(12,2) not null,
 FechaActualizacion datetime not null,
 primary key (IDPrecio),
@@ -169,16 +162,18 @@ foreign key (IDInventario) references Inventario_Casa(IDInventario));
 create table Lista_Compras (
 IDListaCompras int not null,
 NombreLista varchar(100) not null,
+IDCategoriaLista int not null,
 IDProducto int not null,
 FechaCreacion datetime,
 primary key(IDListaCompras),
+foreign key (IDCategoriaLista) references Categorias_Lista(IDCategoriaLista),
 foreign key (IDProducto) references Producto(IDProducto));
 
 create table Recordatorios (
-IDRecordatorio int not null,
+IDRecordatorio int not null, 
 IDListaCompras int not null,
 IDUsuario int not null,
-DescripcionAlerta text,
+DescripcionAlerta text, 
 FechaRecordatorio datetime not null,
 primary key (IDRecordatorio),
 foreign key (IDUsuario) references Usuario(IDUsuario),
